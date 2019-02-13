@@ -1,25 +1,60 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Form from "./components/Form";
+import List from "./components/List";
+import Total from "./components/Total";
+import Title from "./components/Title";
 
 class App extends Component {
+  state = {
+    itemCounter: {}
+  };
+
+  componentDidUpdate() {
+    localStorage.setItem("counterApp", JSON.stringify(this.state.itemCounter));
+  }
+
+  componentDidMount() {
+    const localStorageRef = localStorage.getItem("counterApp");
+    if (localStorageRef) {
+      this.setState({
+        itemCounter: JSON.parse(localStorageRef)
+      });
+    }
+  }
+
+  addItemToList = item => {
+    const items = { ...this.state.itemCounter };
+    items[`item${Date.now()}`] = item;
+    this.setState({
+      itemCounter: items
+    });
+  };
+
+  removeItemToList = item => {
+    const items = { ...this.state.itemCounter };
+    delete items[item];
+    this.setState({
+      itemCounter: items
+    });
+  };
+
+  handleCountChange = (index, action) => {
+    this.setState(prevState => ({
+      count: (prevState.itemCounter[index].count += action)
+    }));
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Title />
+        <Form addItem={this.addItemToList} />
+        <List
+          lists={this.state.itemCounter}
+          removeItem={this.removeItemToList}
+          changeCount={this.handleCountChange}
+        />
+        <Total total={this.state.itemCounter} />
       </div>
     );
   }
