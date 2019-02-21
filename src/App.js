@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import List from "./components/List";
 import Total from "./components/Total";
 import Title from "./components/Title";
+import Footer from "./components/Footer";
 
 class App extends Component {
   state = {
@@ -46,15 +47,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Title />
-        <Form addItem={this.addItemToList} />
-        <List
-          lists={this.state.itemCounter}
-          removeItem={this.removeItemToList}
-          changeCount={this.handleCountChange}
-        />
-        <Total total={this.state.itemCounter} />
+      <div>
+        <div className="App">
+          <Title />
+          <Form addItem={this.addItemToList} />
+          <List
+            lists={this.state.itemCounter}
+            removeItem={this.removeItemToList}
+            changeCount={this.handleCountChange}
+          />
+          <Total total={this.state.itemCounter} />
+        </div>
+        <Footer />
       </div>
     );
   }

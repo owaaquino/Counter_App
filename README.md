@@ -530,3 +530,29 @@ With our states having values from our input box, we can now display the states 
 ```
 - We use reduce() api to get the count value in every object available in our state, then add them to a variable named total.
 - Then we need to call the getTotalCount to our paragraph element for display.
+
+## 7. Persisting data to local storage
+
+- Now we'll persist the data to local storage so that every time we refresh the page. Our counter and its data wont be remove.
+
+## App.js
+```javascript
+    componentDidUpdate() {
+        localStorage.setItem("counterApp", JSON.stringify(this.state.itemCounter));
+      }
+```
+- We only needed to add this to the App.js which is our main component.
+- componentDidUpdate() is a React lifecycle method that when an update occurs into the components we wanted to do everything that this method. For this we added a updating feature of the local storage, that we want to set an Item to the local storage that has the name counterApp.
+- We need to convert our objects to JSON type because this is the only format the local storage can understand.
+```javascript
+    componentDidMount() {
+        const localStorageRef = localStorage.getItem("counterApp");
+        if (localStorageRef) {
+          this.setState({
+            itemCounter: JSON.parse(localStorageRef)
+          });
+        }
+      }
+```
+- componentDidMount is another React lifecycle method that occurs when components mounted.
+- Here we get all the item in the counterApp localstorage. Then if the localStorage is not empty or is available, we should update our state objects based on the localstorage values. (need again to conver the JSON to object)
