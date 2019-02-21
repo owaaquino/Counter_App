@@ -44,7 +44,7 @@ const CounterForm = styled.form`
   }
 `;
 class Form extends Component {
-  addItemToList = e => {
+  addCounterToList  = e => {
     e.preventDefault();
     const newItem = {
       name: e.target.elements.counterName.value,
@@ -55,7 +55,7 @@ class Form extends Component {
   };
   render() {
     return (
-      <CounterForm onSubmit={this.addItemToList}>
+      <CounterForm onSubmit={this.addCounterToList}>
         <input
           type="text"
           name="counterName"
